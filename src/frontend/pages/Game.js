@@ -4,16 +4,16 @@ export default class Game extends React.Component {
   constructor(){
     super();
     this.state = {
-           buttonX: 0,
-           buttonWidth: 250,
-           buttonHigth: 50,
-           mouseX: 0,
-           toTheRight: true,
-           speed: 2,
-           accelMod: 1,
-           windowSize: window.innerWidth,
-       }
+      buttonX: 0,
+      buttonWidth: 250,
+      buttonHigth: 50,
+      mouseX: 0,
+      toTheRight: true,
+      speed: 2,
+      accelMod: 1,
+      windowSize: window.innerWidth
     }
+  }
 
   handleMouseMove(event) {
       this.setState({
@@ -56,7 +56,7 @@ export default class Game extends React.Component {
             toTheRight: true
           });
         }
-        if(windowSize-buttonWidth-5>buttonX || toTheRight===false)
+        if(windowSize-buttonWidth-10>buttonX || toTheRight===false)
         {
           this.setState({
             buttonX: mouseX,
@@ -66,11 +66,13 @@ export default class Game extends React.Component {
   render() {
     let {speed, accelMod, buttonX, buttonWidth, buttonHigth, mouseX, toTheRight, windowSize} = this.state;
     const buttonStyle = {
-      width: buttonWidth+"px",
-      height: buttonHigth+"px",
-      position:"absolute",
-      border:"5px solid",
-      WebkitTransform: `translateX(${buttonX}px)`
+      width:    buttonWidth+"px",
+      height:   buttonHigth+"px",
+      bottom:   buttonHigth,
+      position: "absolute",
+      border:   "5px solid",
+      WebkitTransform: `translateX(${buttonX}px)`,
+      backgroundColor: "#191919"
     };
     return (
       <div style={buttonStyle}>
