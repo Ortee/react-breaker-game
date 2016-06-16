@@ -24,7 +24,8 @@ export default class Game extends React.Component {
   componentDidMount() {
         document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         setInterval(this.movement.bind(this), 1);
-  }
+        setInterval(this.updateScreenSize.bind(this), 1);
+}
 
   componentWillUnmount() {
        document.removeEventListener('mousemove', (e) => this.handleMouseMove(e));
@@ -35,6 +36,14 @@ export default class Game extends React.Component {
           mouseX: (this.state.windowSize-this.state.buttonWidth)/2
       });
   }
+
+  updateScreenSize(){
+    this.setState({
+        windowSize: window.innerWidth
+    });
+    console.log("update");
+  }
+
   movement(){
     let {speed, accelMod, buttonX, buttonWidth, buttonHigth, mouseX, toTheRight, windowSize }= this.state;
         if(mouseX<buttonX)
@@ -61,11 +70,8 @@ export default class Game extends React.Component {
       height: buttonHigth+"px",
       position:"absolute",
       border:"5px solid",
-    //  backgroundImage: 'url("../src/assets/reactimg.png")',
-    //  backgroundSize: "50px 20px",
       WebkitTransform: `translateX(${buttonX}px)`
     };
-    // console.log(buttonX,mouseX);
     return (
       <div style={buttonStyle}>
       </div>
