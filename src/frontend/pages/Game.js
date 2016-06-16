@@ -16,32 +16,31 @@ export default class Game extends React.Component {
   }
 
   handleMouseMove(event) {
-      this.setState({
-          mouseX: event.pageX
-      })
+    this.setState({
+      mouseX: event.pageX
+    })
   }
 
   componentDidMount() {
-        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        setInterval(this.movement.bind(this), 1);
-        setInterval(this.updateScreenSize.bind(this), 1);
-}
+    document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    setInterval(this.movement.bind(this), 1);
+    setInterval(this.updateScreenSize.bind(this), 1);
+  }
 
   componentWillUnmount() {
-       document.removeEventListener('mousemove', (e) => this.handleMouseMove(e));
+    document.removeEventListener('mousemove', (e) => this.handleMouseMove(e));
   }
 
   componentWillMount() {
-      this.setState({
-          mouseX: (this.state.windowSize-this.state.buttonWidth)/2
-      });
+    this.setState({
+      mouseX: (this.state.windowSize-this.state.buttonWidth)/2
+    });
   }
 
   updateScreenSize(){
     this.setState({
-        windowSize: window.innerWidth
+      windowSize: window.innerWidth
     });
-    console.log("update");
   }
 
   movement(){
