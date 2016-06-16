@@ -8,10 +8,16 @@ export class Ball extends React.Component {
       ballX: 0,
       ballWidth: 100,
       ballHigth: 100,
-      speed: 2,
+      speed: 2, // not use
       accelMod: 1,
       windowWidth: window.innerWidth,
-      windowHigth: window.innerHeight
+      windowHigth: window.innerHeight,
+      speedX: 4,
+      speedY: 4,
+      odbicieLeft: false,
+      odbicieRight: false,
+      odbicieUp: false,
+      odbicieDown: false
     }
 
   }
@@ -36,14 +42,58 @@ export class Ball extends React.Component {
   }
 
   movement(){
-    let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth }= this.state;
+    let {speed,speedX,speedY,odbicieLeft,odbicieRight,odbicieUp,odbicieDown, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, windowHigth } = this.state;
+
+    if(odbicieLeft===false && ballX+100===windowWidth)
+    {
+      this.setState({
+        speedX: speedX * (-1),
+        odbicieLeft: true,
+        odbicieRight: false,
+        odbicieUp: false,
+        odbicieDown: false
+      });
+    }
+    if(odbicieRight===false && ballX-100===-100)
+    {
+      this.setState({
+        speedX: speedX * (-1),
+        odbicieRight: true,
+        odbicieLeft: false,
+        odbicieUp: false,
+        odbicieDown: false
+      });
+    }
+    if(odbicieUp===false && (ballY-100)<-350)
+    {
+      this.setState({
+        speedY: speedY * (-1),
+        odbicieUp: true,
+        odbicieLeft: false,
+        odbicieRight: false,
+        odbicieDown: false
+      });
+    }
+    if(odbicieDown===false && (ballY+100)>windowHigth-300)
+    {
+      this.setState({
+        speedY: speedY * (-1),
+        odbicieDown: true,
+        odbicieLeft: false,
+        odbicieRight: false,
+        odbicieUp: false,
+      });
+    }
     this.setState({
-      ballX: ballX+speed,
+      ballX: ballX+speedX,
+      ballY: ballY+speedY
     });
+
   }
   render(){
     let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth} = this.state;
-    let ballStyle={
+
+    let ballStyle = {
       backgroundColor:"orange",
       width: ballWidth+"px",
       height: ballHigth+"px",
@@ -51,6 +101,7 @@ export class Ball extends React.Component {
 
       WebkitTransform: `translate(${ballX}px, ${ballY}px)`,
     }
+
     return (
       <div style={ballStyle}>
 
