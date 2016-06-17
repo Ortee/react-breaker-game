@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux'
 
 export class Button extends React.Component {
   constructor(){
@@ -14,6 +15,7 @@ export class Button extends React.Component {
       windowSize: window.innerWidth
     }
   }
+
 
   handleMouseMove(event) {
     this.setState({
@@ -62,8 +64,17 @@ export class Button extends React.Component {
           });
         }
   }
+
+  sendButtonX() {
+      this.props.dispatch({
+          type: 'BUTTON_X',
+          dataButtonX: 0
+      });
+  }
+
   render() {
     let {speed, accelMod, buttonX, buttonWidth, buttonHigth, mouseX, toTheRight, windowSize} = this.state;
+
     const buttonStyle = {
       width:    buttonWidth+"px",
       height:   buttonHigth+"px",
@@ -78,4 +89,11 @@ export class Button extends React.Component {
       </div>
     );
   }
+
+  changeButtonX(state) {
+    return {
+        dataButtonX: state.dataButtonX
+    };
+  }
 }
+export default connect(changeButtonX)(Button);
