@@ -8,7 +8,6 @@ export class Ball extends React.Component {
       ballX: 0,
       ballWidth: 100,
       ballHigth: 100,
-      speed: 2, // not use
       accelMod: 1,
       windowWidth: window.innerWidth,
       windowHigth: window.innerHeight,
@@ -44,7 +43,7 @@ export class Ball extends React.Component {
   movement(){
     let {speed,speedX,speedY,odbicieLeft,odbicieRight,odbicieUp,odbicieDown, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, windowHigth } = this.state;
 
-    if(odbicieLeft===false && ballX+100===windowWidth)
+    if(odbicieLeft===false && ballX+100>windowWidth)
     {
       this.setState({
         speedX: speedX * (-1),
@@ -54,7 +53,7 @@ export class Ball extends React.Component {
         odbicieDown: false
       });
     }
-    if(odbicieRight===false && ballX-100===-100)
+    if(odbicieRight===false && ballX-100<-100)
     {
       this.setState({
         speedX: speedX * (-1),
@@ -77,7 +76,8 @@ export class Ball extends React.Component {
     if(odbicieDown===false && (ballY+100)>windowHigth-300)
     {
       this.setState({
-        speedY: speedY * (-1),
+        speedX: 0,
+        speedY: 0,
         odbicieDown: true,
         odbicieLeft: false,
         odbicieRight: false,
