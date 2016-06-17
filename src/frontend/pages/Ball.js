@@ -94,11 +94,12 @@ export class Ball extends React.Component {
     let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth} = this.state;
 
     let ballStyle = {
-      backgroundColor:"orange",
+      border: "1px solid",
       width: ballWidth+"px",
       height: ballHigth+"px",
       borderRadius: "50%",
-
+      backgroundImage: "url('../assets/reactimg.png')",
+      backgroundSize: ballWidth+"px "+ballHigth+"px",
       WebkitTransform: `translate(${ballX}px, ${ballY}px)`,
     }
 
