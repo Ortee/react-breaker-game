@@ -2,9 +2,8 @@ let actions = {
   changeButton: function(text) {
     return {
       type: 'CHANGE_BUTTONX',
-      text: text
+      dataButtonX: text
     }
   }
 }
 export default actions
-// store.dispatch(changeButton('100'))

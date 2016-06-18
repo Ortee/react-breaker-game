@@ -7,6 +7,5 @@ let finalCreateStore = compose(
 )(createStore)
 
 export default function configureStore(initialState = { dataButtonX }) {
-  console.log(reducer, initialState);
   return finalCreateStore(reducer, initialState)
 }

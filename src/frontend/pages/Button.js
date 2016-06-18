@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
-import changeButton from '../actions'
-import actions from "../actions"
+import actions from '../actions'
 export class Button extends React.Component {
   constructor(){
     super();
@@ -30,7 +29,7 @@ export class Button extends React.Component {
     document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
     setInterval(this.movement.bind(this), 1);
     setInterval(this.updateScreenSize.bind(this), 1);
-    setInterval(this.handleSendButtonX.bind(this), 1);
+    setInterval(this.handleSendButtonX.bind(this), 5000);
 
   }
 
@@ -71,7 +70,7 @@ export class Button extends React.Component {
   }
 
   handleSendButtonX(event) {
-    this.props.dispatch(changeButton('500'))
+    this.props.dispatch(actions.changeButton(500));
 }
 
   render() {
@@ -90,11 +89,5 @@ export class Button extends React.Component {
       <div style={buttonStyle}>
       </div>
     );
-  }
-
-  changeButtonX(state) {
-    return {
-        dataButtonX: state.dataButtonX
-    };
   }
 }
