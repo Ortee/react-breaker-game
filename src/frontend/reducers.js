@@ -1,16 +1,12 @@
-import { combineReducers } from 'redux'
-
-
-const gameApp = (state, action) => {
+let reducer = function(state, action) {
   console.log(action.type);
   switch (action.type) {
-    case 'BUTTON_X':
-      return {
-        dataButtonX:action.dataButtonX
-      }
+    case 'CHANGE_BUTTONX':
+      console.log("CHANGE_BUTTONX!!!!!!!!");
+      return Object.assign({}, state, action.text)
     default:
-      return state
+      return state;
   }
 }
 
-export default gameApp
+export default reducer

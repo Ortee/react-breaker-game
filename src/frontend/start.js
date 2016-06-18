@@ -1,8 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+
+import configureStore from './store';
+let initialState = { dataButtonX: 0 }
+
+let store = configureStore(initialState);
+
 
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 
@@ -11,7 +16,7 @@ import Layout from "./pages/Layout";
 import gameApp from './reducers';
 
 const app = document.getElementById('app');
-let store = createStore(gameApp)
+
 
 ReactDOM.render(
   <Provider store={store}>

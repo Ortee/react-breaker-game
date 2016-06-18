@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux'
-
+import { PropTypes } from 'react'
+import changeButton from '../actions'
+import actions from "../actions"
 export class Button extends React.Component {
   constructor(){
     super();
@@ -14,6 +16,7 @@ export class Button extends React.Component {
       accelMod: 1,
       windowSize: window.innerWidth
     }
+
   }
 
 
@@ -27,6 +30,8 @@ export class Button extends React.Component {
     document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
     setInterval(this.movement.bind(this), 1);
     setInterval(this.updateScreenSize.bind(this), 1);
+    setInterval(this.handleSendButtonX.bind(this), 1);
+
   }
 
   componentWillUnmount() {
@@ -65,12 +70,9 @@ export class Button extends React.Component {
         }
   }
 
-  sendButtonX() {
-      this.props.dispatch({
-          type: 'BUTTON_X',
-          dataButtonX: 0
-      });
-  }
+  handleSendButtonX(event) {
+    this.props.dispatch(changeButton('500'))
+}
 
   render() {
     let {speed, accelMod, buttonX, buttonWidth, buttonHigth, mouseX, toTheRight, windowSize} = this.state;
@@ -96,4 +98,3 @@ export class Button extends React.Component {
     };
   }
 }
-export default connect(changeButtonX)(Button);
