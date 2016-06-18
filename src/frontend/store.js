@@ -6,6 +6,12 @@ let finalCreateStore = compose(
   applyMiddleware(logger())
 )(createStore)
 
-export default function configureStore(initialState = { dataButtonX }) {
-  return finalCreateStore(reducer, initialState)
+//DEBUG ON
+// export default function configureStore(initialState = { dataButtonX: 0 }) {
+//   return finalCreateStore(reducer, initialState)
+// }
+
+//DEBUG OFF
+export default function configureStore(initialState = { dataButtonX: 0 }) {
+  return createStore(reducer, initialState)
 }

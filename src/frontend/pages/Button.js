@@ -29,7 +29,7 @@ export class Button extends React.Component {
     document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
     setInterval(this.movement.bind(this), 1);
     setInterval(this.updateScreenSize.bind(this), 1);
-    setInterval(this.handleSendButtonX.bind(this), 5000);
+    setInterval(this.handleSendButtonX.bind(this), 5);
 
   }
 
@@ -70,7 +70,7 @@ export class Button extends React.Component {
   }
 
   handleSendButtonX(event) {
-    this.props.dispatch(actions.changeButton(500));
+    this.props.dispatch(actions.changeButton(this.state.buttonX));
 }
 
   render() {

@@ -76,8 +76,7 @@ export class Ball extends React.Component {
     if(odbicieDown===false && (ballY+100)>windowHigth-300)
     {
       this.setState({
-        speedX: 0,
-        speedY: 0,
+        speedY: speedY * (-1),
         odbicieDown: true,
         odbicieLeft: false,
         odbicieRight: false,
