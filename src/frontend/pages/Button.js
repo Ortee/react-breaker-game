@@ -1,7 +1,6 @@
 import React from "react";
-import { connect } from 'react-redux'
-import { PropTypes } from 'react'
 import actions from '../actions'
+
 export class Button extends React.Component {
   constructor(){
     super();
@@ -27,10 +26,9 @@ export class Button extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    document.addEventListener('mousemove', this.handleSendButtonX.bind(this));
     setInterval(this.movement.bind(this), 1);
     setInterval(this.updateScreenSize.bind(this), 1);
-    setInterval(this.handleSendButtonX.bind(this), 5);
-
   }
 
   componentWillUnmount() {
