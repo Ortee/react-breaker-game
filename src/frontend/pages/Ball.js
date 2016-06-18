@@ -16,15 +16,18 @@ export class Ball extends React.Component {
       odbicieLeft: false,
       odbicieRight: false,
       odbicieUp: false,
-      odbicieDown: false
+      odbicieDown: false,
+      gameButtonX: 0
     }
 
   }
 
   updateScreenSize(){
+    let gameButton = document.getElementById('gameButton').style.transform;
     this.setState({
       windowWidth: window.innerWidth,
-      windowHigth: window.innerHeight
+      windowHigth: window.innerHeight,
+      gameButtonX: parseInt(gameButton.replace("translateX(",""))
     });
   }
 
@@ -41,8 +44,19 @@ export class Ball extends React.Component {
   }
 
   movement(){
-    let {speed,speedX,speedY,odbicieLeft,odbicieRight,odbicieUp,odbicieDown, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, windowHigth } = this.state;
+    let {speed,speedX,speedY,odbicieLeft,odbicieRight,odbicieUp,odbicieDown, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, windowHigth, gameButtonX } = this.state;
 
+    if(odbicieDown===false && (ballY+100)>windowHigth-340 && gameButtonX-ballX>-250 && gameButtonX-ballX<50)
+    {
+      console.log('BOUNCE');
+      this.setState({
+        speedY: speedY * (-1),
+        odbicieDown: true,
+        odbicieLeft: false,
+        odbicieRight: false,
+        odbicieUp: false,
+      });
+    }
     if(odbicieLeft===false && ballX+100>windowWidth)
     {
       this.setState({
@@ -75,6 +89,7 @@ export class Ball extends React.Component {
     }
     if(odbicieDown===false && (ballY+100)>windowHigth-300)
     {
+      console.log("LOSE");
       this.setState({
         speedX: 0,
         speedY: 0,
@@ -91,8 +106,7 @@ export class Ball extends React.Component {
 
   }
   render(){
-    let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth} = this.state;
-
+    let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, gameButtonX} = this.state;
     let ballStyle = {
       border: "1px solid",
       width: ballWidth+"px",

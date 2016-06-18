@@ -74,7 +74,7 @@ export class Button extends React.Component {
       backgroundColor: "#191919"
     };
     return (
-      <div style={buttonStyle}>
+      <div id="gameButton" style={buttonStyle}>
       </div>
     );
   }
