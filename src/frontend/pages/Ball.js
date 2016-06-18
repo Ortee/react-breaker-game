@@ -4,31 +4,42 @@ export class Ball extends React.Component {
   constructor(){
     super();
     this.state = {
-      ballY: 0,
-      ballX: 0,
-      ballWidth: 100,
-      ballHigth: 100,
-      accelMod: 1,
-      windowWidth: window.innerWidth,
-      windowHigth: window.innerHeight,
-      speedX: 4,
-      speedY: 4,
-      odbicieLeft: false,
-      odbicieRight: false,
-      odbicieUp: false,
-      odbicieDown: false,
-      gameButtonX: 0
+      ball:{
+        y:      0,
+        x:      0,
+        width:  100,
+        height: 100,
+        speedX: 4,
+        speedY: 4
+      },
+      button:{
+        x:      0,
+        y:      0,
+        width:  0,
+        height: 0
+      },
+      bounce: {
+        left:   false,
+        right:  false,
+        up:     false,
+        down:   false
+      },
+      gameWindow: {
+        width:  window.innerWidth,
+        higth:  window.innerHeight
+      }
     }
-
   }
 
   updateScreenSize(){
-    let gameButton = document.getElementById('gameButton').style.transform;
+    let _gameButton = document.getElementById('gameButton').style.transform;
+    let _gameButtonWidth = document.getElementById('gameButton').style.width;
+    let _gameButtonHeight = document.getElementById('gameButton').style.height;
+
     this.setState({
-      windowWidth: window.innerWidth,
-      windowHigth: window.innerHeight,
-      gameButtonX: parseInt(gameButton.replace("translateX(",""))
-    });
+      gameWindow: Object.assign({}, this.state.window, { width: window.innerWidth, height: window.innerHeight }),
+      button: Object.assign({}, this.state.button, { width: _gameButtonWidth, height: _gameButtonHeight, x: parseInt(_gameButton.replace("translateX(",""))}),
+    })
   }
 
   componentDidMount() {
@@ -38,88 +49,73 @@ export class Ball extends React.Component {
 
   componentWillMount() {
     this.setState({
-      ballX: (this.state.windowWidth)/2,
-      ballY: (this.state.windowHigth)/100
+      ball: Object.assign({}, this.state.ball, { x: 0, y: 0 })
     });
   }
 
   movement(){
-    let {speed,speedX,speedY,odbicieLeft,odbicieRight,odbicieUp,odbicieDown, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, windowHigth, gameButtonX } = this.state;
+    let {ball, gameWindow, button, bounce } = this.state;
 
-    if(odbicieDown===false && (ballY+100)>windowHigth-340 && gameButtonX-ballX>-250 && gameButtonX-ballX<50)
+    if(bounce.down===false && (ball.y+100)>gameWindow.height-340 && button.x-ball.x>-250 && button.x-ball.x<50)
     {
       console.log('BOUNCE');
       this.setState({
-        speedY: speedY * (-1),
-        odbicieDown: true,
-        odbicieLeft: false,
-        odbicieRight: false,
-        odbicieUp: false,
+        ball: Object.assign({}, this.state.ball, { speedY:this.state.ball.speedY * (-1) }),
+        bounce: Object.assign({}, this.state.bounce, { down:true, up:false, right:false, left:false })
       });
     }
-    if(odbicieLeft===false && ballX+100>windowWidth)
+
+    if(bounce.left===false && ball.x+100>gameWindow.width)
     {
       this.setState({
-        speedX: speedX * (-1),
-        odbicieLeft: true,
-        odbicieRight: false,
-        odbicieUp: false,
-        odbicieDown: false
+        ball: Object.assign({}, this.state.ball, { speedX:this.state.ball.speedX * (-1) }),
+        bounce: Object.assign({}, this.state.bounce, { down:false, up:false, right:false, left:true })
       });
     }
-    if(odbicieRight===false && ballX-100<-100)
+
+    if(bounce.right===false && ball.x-100<-100)
+    {
+
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { speedX:this.state.ball.speedX * (-1) }),
+        bounce: Object.assign({}, this.state.bounce, { down:false, up:false, right:true, left:false })
+      });
+    }
+
+    if(bounce.up===false && (ball.y-100)<-350)
     {
       this.setState({
-        speedX: speedX * (-1),
-        odbicieRight: true,
-        odbicieLeft: false,
-        odbicieUp: false,
-        odbicieDown: false
+        ball: Object.assign({}, this.state.ball, { speedY: this.state.ball.speedY * (-1) }),
+        bounce: Object.assign({}, this.state.bounce, { down:false, up:true, right:false, left:false })
       });
     }
-    if(odbicieUp===false && (ballY-100)<-350)
-    {
-      this.setState({
-        speedY: speedY * (-1),
-        odbicieUp: true,
-        odbicieLeft: false,
-        odbicieRight: false,
-        odbicieDown: false
-      });
-    }
-    if(odbicieDown===false && (ballY+100)>windowHigth-300)
+
+    if(bounce.down===false && (ball.y+100)>gameWindow.height-300)
     {
       console.log("LOSE");
       this.setState({
-        speedX: 0,
-        speedY: 0,
-        odbicieDown: true,
-        odbicieLeft: false,
-        odbicieRight: false,
-        odbicieUp: false,
+        ball: Object.assign({}, this.state.ball, { speedX: 0, speedY: 0 }),
+        bounce: Object.assign({}, this.state.bounce, { down:true, up:false, right:false, left:false })
       });
     }
-    this.setState({
-      ballX: ballX+speedX,
-      ballY: ballY+speedY
-    });
 
+    this.setState({
+      ball: Object.assign({}, this.state.ball, { x: this.state.ball.x + this.state.ball.speedX, y: this.state.ball.y + this.state.ball.speedY, })
+    });
   }
   render(){
-    let {speed, accelMod, ballX, ballY, ballWidth, ballHigth, windowWidth, gameButtonX} = this.state;
+    let {ball, gameWindow, button, bounce} = this.state;
     let ballStyle = {
       border: "1px solid",
-      width: ballWidth+"px",
-      height: ballHigth+"px",
+      width: ball.width+"px",
+      height: ball.height+"px",
       borderRadius: "50%",
       backgroundImage: "url('../assets/reactimg.png')",
-      backgroundSize: ballWidth+"px "+ballHigth+"px",
-      WebkitTransform: `translate(${ballX}px, ${ballY}px)`,
+      backgroundSize: ball.width+"px "+ball.height+"px",
+      WebkitTransform: `translate(${ball.x}px, ${ball.y}px)`,
     }
-
     return (
       <div style={ballStyle}>
-
       </div>
     );
   }
