@@ -48,6 +48,30 @@ export class Ball extends React.Component {
   }
 
   componentWillMount() {
+    let windowWidth = this.state.gameWindow.width;
+    if(windowWidth>1400)
+    {
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { width: 100, height: 100 })
+      });
+    } else if(windowWidth<1400 && windowWidth>1100) {
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { width: 90, height: 90 })
+      });
+    } else if(windowWidth<1100 && windowWidth>800) {
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { width: 80, height: 80 })
+      });
+      console.log(this.state.ball.width);
+    } else if(windowWidth<800 && windowWidth>600) {
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { width: 70, height: 70 })
+      });
+    } else if(windowWidth<600 && windowWidth>300) {
+      this.setState({
+        ball: Object.assign({}, this.state.ball, { width: 60, height: 60 })
+      });
+    }
     this.setState({
       ball: Object.assign({}, this.state.ball, { x: 0, y: 0 })
     });
@@ -105,6 +129,7 @@ export class Ball extends React.Component {
   }
   render(){
     let {ball, gameWindow, button, bounce} = this.state;
+
     let ballStyle = {
       border: "1px solid",
       width: ball.width + "px",
@@ -112,7 +137,7 @@ export class Ball extends React.Component {
       borderRadius: "50%",
       backgroundImage: "url('../assets/reactimg.png')",
       backgroundSize: ball.width + "px " + ball.height + "px",
-      WebkitTransform: `translate(${ ball.x } px, ${ ball.y } px)`,
+      WebkitTransform: `translate(${ ball.x }px, ${ ball.y }px)`,
     }
     return (
       <div style={ballStyle}>
